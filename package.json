@@ -27,6 +27,6 @@
     "npm": ">=6.0.0"
   },
   "license": "MIT",
-  "packageManager": "^yarn@1.22.19"
+  "packageManager": "yarn@1.22.19"
 }
 
