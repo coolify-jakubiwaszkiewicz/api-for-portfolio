@@ -1,2 +1,2 @@
-docker build -t my-strapi-app .
-docker run -p 1337:1337 my-strapi-app
+docker build -t strapi-app .
+docker run -p 3001:3001 strapi-app
