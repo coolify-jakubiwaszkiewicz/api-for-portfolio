@@ -1,0 +1,3 @@
+server.iw4sz.pl
+
+reverse_proxy localhost:3001

@@ -10,4 +10,6 @@ module.exports = ({ env }) => ({
       salt: env('TRANSFER_TOKEN_SALT'),
     },
   },
+  port: 3001,
+  url: "https://server.iw4sz.pl/admin"
 });
