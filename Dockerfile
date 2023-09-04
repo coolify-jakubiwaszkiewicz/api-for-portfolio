@@ -5,7 +5,7 @@ FROM node:latest
 WORKDIR /usr/src/app
 
 # Copy package.json and yarn.lock to the container
-COPY .package.json ./yarn.lock ./
+COPY ./package.json ./yarn.lock ./
 
 # Install Strapi dependencies using Yarn
 RUN yarn install
