@@ -16,5 +16,8 @@ COPY . .
 # Expose the port that Strapi will run on
 EXPOSE 3001
 
+# Build Strapi
+RUN yarn build
+
 # Start Strapi
 CMD ["yarn", "start"]
