@@ -1,36 +1,16 @@
 #!/bin/bash
-###########################################
-#
-# Simple Shell script to clean/remove all container/images
-#
-# The script will 
-#  - first stop all running containers (if any),
-#  - remove containers
-#  - remove images
-#  - remove volumes
-#
 
-# stop all running containers
-echo '####################################################'
-echo 'Stopping running containers (if available)...'
-echo '####################################################'
-docker stop $(docker ps -aq)
+# Get the parent folder name
+parent_folder_name="$(basename "$(pwd)")"
 
-# remove all stopped containers
-echo '####################################################'
-echo 'Removing containers ..'
-echo '####################################################'
-docker rm $(docker ps -aq)
+# Specify the image name based on the parent folder name
+image_name="image-$parent_folder_name"
 
+# Specify the container name based on the parent folder name
+container_name="$parent_folder_name"
 
-# remove all images
-echo '####################################################'
-echo 'Removing images ...'
-echo '####################################################'
-docker rmi $(docker images -q)
+# Stop and remove the Docker container
+docker stop "$container_name" && docker rm "$container_name"
 
-# remove all stray volumes if any
-echo '####################################################'
-echo 'Revoming docker container volumes (if any)'
-echo '####################################################'
-docker volume rm $(docker volume ls -q)
+# Remove the Docker image
+docker rmi "$image_name"
