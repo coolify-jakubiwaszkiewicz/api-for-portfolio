@@ -1,23 +1,18 @@
-# Use an official Node.js runtime with Yarn as the base image
-FROM node:latest
+FROM node:18-alpine
+# Installing libvips-dev for sharp Compatibility
+RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev
+ARG NODE_ENV=development
+ENV NODE_ENV=${NODE_ENV}
 
-# Set the working directory inside the container
-WORKDIR /usr/src/app
+WORKDIR /opt/
+COPY package.json package-lock.json ./
+RUN npm config set fetch-retry-maxtimeout 600000 -g && npm install
+ENV PATH /opt/node_modules/.bin:$PATH
 
-# Copy package.json and yarn.lock to the container
-COPY ./package.json ./yarn.lock ./
-
-# Install Strapi dependencies using Yarn
-RUN yarn install
-
-# Copy the Strapi application code into the container
+WORKDIR /opt/app
 COPY . .
-
-# Expose the port that Strapi will run on
+RUN chown -R node:node /opt/app
+USER node
+RUN ["npm", "run", "build"]
 EXPOSE 3001
-
-# Build Strapi
-RUN yarn build
-
-# Start Strapi
-CMD ["yarn", "start"]
+CMD ["npm", "run", "develop"]
